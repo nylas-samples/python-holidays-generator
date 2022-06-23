@@ -1,45 +1,46 @@
-# template-empty
-_description: An empty template for your code sample_
+# python-holidays-generator
 
-Please include this sample in the [org readme](https://github.com/nylas-samples/.github/blob/main/profile/README.md)?
+This sample will show you to easily create a Markdown file for your Holidays Calendar using Nylas Python SDK.
 
-<br />
+You can follow along step-by-step in our Livestream ["Holidays Calendar with Nylas APIs"]([https://www.nylas.com/blog/how-to-send-emails-with-the-nylas-python-sdk/](https://twitter.com/i/broadcasts/1OwxWzLpVnZJQ)).
 
-## Installation
+## Setup
 
-The recommended way to use this sample is ...
+### System dependencies
 
-You can also clone the repository ...
+- Python v3.x
 
-You'll find more detailed instructions ...
+### Gather environment variables
 
+You'll need the following values:
 
-<br />
+```text
+ACCESS_TOKEN = ""
+CLIENT_ID = ""
+CLIENT_SECRET = ""
+HOLIDAYS_CALENDAR_ID = ""
+```
 
+Add the above values to a new `.env` file:
 
-## FAQ
+```bash
+$ touch .env # Then add your env variables
+```
 
-Q: 
+### Install dependencies
 
-A: 
+```bash
+$ pip3 install nylas
+```
 
+## Usage
 
-<br />
+Run the script using the `python3` command:
 
-## Get support
+```bash
+$ python3 Holidays_Generator.py year_we_want
+```
 
-If you found a bug or want to suggest a new [feature/use case/sample], please file an issue.
+## Learn more
 
-If you have questions, comments, or need help with code, we're here to help:
-- Email us at support@nylas.com
-
-<br />
-
-## Contributing
-
-...
-
-<br />
-
-## Authors
-- @
+Visit our [Nylas Python SDK documentation](https://developer.nylas.com/docs/developer-tools/sdk/python-sdk/) to learn more.
