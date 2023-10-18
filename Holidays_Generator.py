@@ -5,17 +5,15 @@ import re
 import calendar
 from datetime import date
 import datetime
-from nylas import APIClient
+from nylas import Client
 from dotenv import load_dotenv
 
 # Load your env variables
 load_dotenv()
 
 # Initialize your Nylas API client
-nylas = APIClient(
-    os.environ.get("CLIENT_ID"),
-    os.environ.get("CLIENT_SECRET"),
-    os.environ.get("ACCESS_TOKEN"),
+nylas = Client(
+    api_key = os.environ.get("V3_API_KEY"),
 )
 
 # Array to hold all events
@@ -25,39 +23,32 @@ months = range(1, 13)
 # Year that we want to print out
 year = str(sys.argv[1])
 
-# Path of file, replace it with your own path
+# Path of file
 file_name = (
-    "/Users/YOUR_USER/Library/Mobile Documents/iCloud~md~obsidian/Documents/YOUR_FOLDER/Holidays Calendar "
+    "/Users/blag/Library/Mobile Documents/iCloud~md~obsidian/Documents/Blag/Holidays Calendar "
     + year
-    + " .md"
+    + ".md"
 )
 
-# Comment this if you want to use Regex
+# Use RegEx to filter out by year
+regex = re.compile(year)
+
+# Get first half of the year
 START_TIME = int(datetime.datetime(int(year), 1, 1, 0, 0, 0).strftime('%s'))
 END_TIME = int(datetime.datetime(int(year), 12, 31, 23, 0, 0).strftime('%s'))
 
-# Use RegEx to filter out by year
-# Comment this line if you want to use Regex
-regex = re.compile(year)
+# Define the query parameters
+query_params = {"calendar_id": os.environ.get("HOLIDAY_CALENDAR")}
+query_params['start'] = START_TIME
+query_params['end'] = END_TIME
+query_params['limit'] = 200
 
-# Uncomment this line if you want to use RegEx
 # Get all events from our Holidays Calendar
-#events = nylas.events.where(calendar_id=os.environ.get("HOLIDAYS_CALENDAR_ID"))
-
-# Comment this if you want to use Regex
-events = nylas.events.where(calendar_id=os.environ.get("HOLIDAYS_CALENDAR_ID"), 
-starts_after = START_TIME, ends_before = END_TIME)
+events = nylas.events.list(os.environ.get("GRANT_ID") , query_params = query_params).data
 
 # Store all events in an array
 for event in events:
-    yearly_events.append(event.when["date"] + " " + event.title)
-
-# Use our RegEx to get only events happening on the requested year
-
-# Uncomment this line if you want to use RegEx
-#filtered_events = [event for event in yearly_events if regex.match(event)]
-# Comment this if you want to use Regex
-filtered_events = yearly_events
+    yearly_events.append(event.when.date + " " + event.title)
 
 # Open the file to write to it
 with open(file_name, "w") as f:
@@ -70,7 +61,7 @@ with open(file_name, "w") as f:
             s_month = str(month)
         # Get only the current month using RegEx
         regex = re.compile(".*-" + s_month + "-.*")
-        filtered_month = [event for event in filtered_events if regex.match(event)]
+        filtered_month = [event for event in yearly_events if regex.match(event)]
         # Print name of month
         f.write(f"|{calendar.month_name[month]}| |")
         f.write("\n|-|-|")
