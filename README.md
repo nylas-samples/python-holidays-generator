@@ -15,10 +15,10 @@ You can follow along step-by-step in our Livestream ["Holidays Calendar with Nyl
 You'll need the following values:
 
 ```text
-ACCESS_TOKEN = ""
-CLIENT_ID = ""
-CLIENT_SECRET = ""
-HOLIDAYS_CALENDAR_ID = ""
+V3_API_KEY = ""
+CALENDAR_ID = ""
+GRANT_ID = ""
+HOLIDAY_CALENDAR = ""
 ```
 
 Add the above values to a new `.env` file:
